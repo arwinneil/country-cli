@@ -9,13 +9,13 @@ import (
 )
 
 type Country struct {
-	name          string // official name in english
-	cca2          string // country code on 2 digits
-	cca3          string // country code on 3 digits
-	region        string
-	subregion     string
-	currency      string //Note countries can have multiple currencies, using only first one to abide by struct provided
-	currencySymbo string
+	Name          string // official name in english
+	Cca2          string // country code on 2 digits
+	Cca3          string // country code on 3 digits
+	Region        string
+	Subregion     string
+	Currency      string //Note countries can have multiple currencies, using only first one to abide by struct provided
+	CurrencySymbo string
 }
 
 type RawCountry struct {
@@ -60,7 +60,6 @@ func FetchByRegion(region string) ([]Country, error) {
 
 	countries := parseCountries(result)
 
-	fmt.Println(countries)
 	return countries, nil
 
 }
@@ -68,12 +67,14 @@ func FetchByRegion(region string) ([]Country, error) {
 func FetchBySubRegion(subregion string) ([]Country, error) {
 
 	endpoint := baseUrl + "subregion/" + url.PathEscape(subregion) + "?" + filter
-	_, err := fetch(endpoint)
+	result, err := fetch(endpoint)
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, nil
+	countries := parseCountries(result)
+
+	return countries, nil
 
 }
 
