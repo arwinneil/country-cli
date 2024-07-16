@@ -90,6 +90,8 @@ func fetch(endpoint string) ([]RawCountry, error) {
 		return nil, err
 	}
 
+	defer resp.Body.Close()
+
 	var rawCountries []RawCountry
 
 	err = json.Unmarshal([]byte(responseData), &rawCountries)
